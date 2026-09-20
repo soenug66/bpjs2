@@ -41,7 +41,7 @@ function hexColor(hex){const n=parseInt(hex.replace('#',''),16);return PDFLib.rg
 async function canvasPng(){return $('barcode').toDataURL('image/png')}
 async function generatePDF(){try{updatePreview();const pdfBytes=Uint8Array.from(atob(TEMPLATE_PDF.split(',')[1]),c=>c.charCodeAt(0));const doc=await PDFLib.PDFDocument.load(pdfBytes);const page=doc.getPages()[0];const font=await doc.embedFont(PDFLib.StandardFonts.Helvetica);const bold=await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);const d=data();const black=PDFLib.rgb(0,0,0);const size=10.3;
 function draw(text,x,top,fontFace=font){page.drawText(text,{x,y:299-top-size,font:fontFace,size,color:black})}
-draw(d.nomor,150,120,bold);draw(d.nama,150,135,bold);draw(d.alamat,150,152,font);draw(d.lahir,150,181,font);draw(d.nik,150,196,font);draw(d.faskes,150,211,font);draw(d.kab,150,165,font);
+draw(d.nomor,150,120,bold);draw(d.nama,150,135,bold);draw(d.alamat,150,153,font);draw(d.lahir,150,181,font);draw(d.nik,150,196,font);draw(d.faskes,150,211,font);draw(d.kab,150,163,font);
 const png=await doc.embedPng(await canvasPng());page.drawImage(png,{x:39,y:299-82-27,width:190,height:27});
 const out=await doc.save();const blob=new Blob([out],{type:'application/pdf'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='kartu-'+(d.nama||'peserta')+'.pdf';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }catch(e){alert('Gagal membuat PDF: '+e.message)}}
